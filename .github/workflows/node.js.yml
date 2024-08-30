@@ -1,0 +1,40 @@
+
+name: build
+run-name: build
+
+on:
+  pull_request:
+    branches:
+      - main
+      - 'release/*'
+      - master
+  push:
+    branches:
+      - main
+      - 'release/*'
+      - master
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macOS-latest ]
+        node: [ 20 ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build
+        run: npm run build
+
+# Uncomment this section if you have tests to run
+#      - name: Test
+#        run: npm test
