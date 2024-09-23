@@ -1,5 +1,18 @@
 const mongoose = require("mongoose");
 
+const AccountSchema = new mongoose.Schema({
+  username: {
+    required: [true, ""],
+    type: "string",
+  },
+  password: {
+    required: [true, ""],
+    type: "string",
+    minlength: 6,
+    maxlength: 100,
+  },
+});
+
 const KhachHangSchema = new mongoose.Schema({
   MaCus: {
     type: String,
@@ -146,6 +159,7 @@ const counterSchema = new mongoose.Schema({
   seq: Number,
 });
 
+const Account = mongoose.model("Account", AccountSchema);
 const KhachHang = mongoose.model("KhachHang", KhachHangSchema);
 const DanhSachSanBay = mongoose.model("DanhSachSanBay", DanhSachSanBaySchema);
 const Tuyen = mongoose.model("Tuyen", TuyenSchema);
@@ -171,6 +185,7 @@ const CounterDatTau = mongoose.model("CounterDatTau", counterSchema);
 const CounterDatBuyt = mongoose.model("CounterDatBuyt", counterSchema);
 
 module.exports = {
+  Account,
   KhachHang,
   DanhSachSanBay,
   Tuyen,
